@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#080b1e" />
+    <title>Orbit — Seu espaço para fazer acontecer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+  </head>
+  <body>
+    <section id="welcomeScreen" class="welcome-screen" aria-label="Boas-vindas">
+      <div class="welcome-copy">
+        <a href="#" class="brand"><span class="brand-mark"><i></i><i></i><i></i></span><span>orbit<span class="brand-dot">.</span></span></a>
+        <span class="status-pill"><i></i> SEU UNIVERSO, ORGANIZADO</span>
+        <h1>Ideias em órbita.<br /><em>Planos em movimento.</em></h1>
+        <p>Um espaço calmo para transformar suas tarefas diárias em conquistas que realmente importam.</p>
+        <div class="welcome-points"><span>✦ Planeje com clareza</span><span>✦ Acompanhe seu ritmo</span><span>✦ Celebre seu progresso</span></div>
+      </div>
+      <div class="welcome-panel-wrap">
+        <div class="welcome-orbit orbit-a"></div><div class="welcome-orbit orbit-b"></div><div class="welcome-star">✦</div>
+        <section class="welcome-panel" aria-labelledby="googleLoginTitle">
+          <div class="welcome-panel-mark">✦</div><h2 id="googleLoginTitle">Bem-vindo à Orbit</h2><p>Entre com sua conta Google para continuar.</p>
+          <div id="googleSignIn" class="google-signin" aria-label="Entrar com Google"></div>
+          <p id="googleLoginIssue" class="google-login-issue" aria-live="polite"></p>
+          <small>Suas tarefas ficam salvas nesta conta neste navegador.</small>
+        </section>
+      </div>
+    </section>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a href="#" class="brand" aria-label="Orbit, página inicial">
+          <span class="brand-mark"><i></i><i></i><i></i></span>
+          <span>orbit<span class="brand-dot">.</span></span>
+        </a>
+
+        <button class="new-task sidebar-new" id="newTaskSide"><span>+</span> Nova tarefa <kbd>⌘ N</kbd></button>
+
+        <nav class="main-nav" aria-label="Navegação principal">
+          <button class="nav-item active" data-view="tasks"><span class="nav-icon">⌂</span>Visão geral</button>
+          <button class="nav-item" data-view="calendar"><span class="nav-icon">□</span>Calendário</button>
+          <button class="nav-item" data-view="kanban"><span class="nav-icon">▤</span>Quadro Kanban</button>
+          <button class="nav-item" data-view="analytics"><span class="nav-icon">◔</span>Produtividade</button>
+        </nav>
+
+        <div class="sidebar-section projects-section">
+          <div class="section-label"><span>SEUS PROJETOS</span><button id="newProjectBtn" aria-label="Criar projeto">+</button></div>
+          <div id="projectNav" class="project-nav"></div>
+        </div>
+
+        <div class="sidebar-bottom">
+          <button class="nav-item" data-view="settings"><span class="nav-icon">⚙</span>Configurações</button>
+          <div class="user-card">
+            <div class="avatar" id="userAvatar">LM</div>
+            <div><strong id="userName">Lucas Martins</strong><span id="userEmail">Conta pessoal</span></div>
+            <button class="more" id="signOut" aria-label="Sair da conta" title="Sair">↪</button>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="page-header">
+          <div>
+            <p class="eyebrow" id="headerDate"></p>
+            <h1 id="pageTitle">Bom dia, Lucas <span>✦</span></h1>
+          </div>
+          <div class="header-actions">
+            <button class="icon-button" id="themeToggle" title="Alternar tema" aria-label="Alternar tema">☼</button>
+            <button class="icon-button notification" title="Notificações" aria-label="Notificações">♧<i></i></button>
+            <button class="new-task" id="newTaskHeader"><span>+</span> Nova tarefa</button>
+          </div>
+        </header>
+
+        <section id="tasksView" class="view active-view">
+          <section class="hero-card">
+            <div class="hero-copy">
+              <span class="status-pill"><i></i> EM ÓRBITA</span>
+              <h2>Pequenos passos.<br /><em>Grandes conquistas.</em></h2>
+              <p>Organize o seu universo e avance um pouco mais hoje.</p>
+              <div class="hero-progress"><div><span id="heroProgressLabel">0% concluído hoje</span><strong id="heroProgressText">0 / 0</strong></div><div class="progress-track"><i id="heroProgressBar"></i></div></div>
+            </div>
+            <div class="planet-wrap" aria-hidden="true"><div class="orbit-line one"></div><div class="orbit-line two"></div><div class="satellite"></div><div class="planet"><span></span></div><div class="planet-glow"></div></div>
+          </section>
+
+          <section class="overview-stats" id="overviewStats"></section>
+
+          <section class="tasks-board">
+            <div class="board-heading">
+              <div><h2>Suas tarefas <span id="taskCount"></span></h2><p id="taskSubtitle">Mantenha o foco no que importa.</p></div>
+              <button class="outline-button" id="clearFilters" hidden>Limpar filtros</button>
+            </div>
+            <div class="toolbar">
+              <label class="search-box"><span>⌕</span><input id="taskSearch" type="search" placeholder="Buscar tarefas..." /></label>
+              <select id="projectFilter" aria-label="Filtrar por projeto"><option value="all">Todos os projetos</option></select>
+              <select id="priorityFilter" aria-label="Filtrar por prioridade"><option value="all">Todas as prioridades</option><option value="urgent">Urgente</option><option value="high">Alta</option><option value="medium">Média</option><option value="low">Baixa</option></select>
+              <select id="statusFilter" aria-label="Filtrar por estado"><option value="all">Todas</option><option value="open">Pendentes</option><option value="done">Concluídas</option></select>
+              <span class="toolbar-divider"></span>
+              <label class="sort-select">Ordenar <select id="sortTasks"><option value="order">Personalizado</option><option value="due">Prazo</option><option value="priority">Prioridade</option><option value="created">Mais recentes</option></select></label>
+            </div>
+            <div id="taskList" class="task-list" aria-live="polite"></div>
+          </section>
+        </section>
+
+        <section id="calendarView" class="view">
+          <div class="view-heading"><div><span class="eyebrow">PLANEJAMENTO</span><h2>Calendário</h2><p>Veja como a sua semana ganha forma.</p></div><button class="new-task" data-open-task><span>+</span> Nova tarefa</button></div>
+          <section class="calendar-card">
+            <div class="calendar-top"><button class="month-nav" id="prevMonth" aria-label="Mês anterior">←</button><h3 id="calendarMonth"></h3><button class="month-nav" id="nextMonth" aria-label="Próximo mês">→</button><button id="calendarToday" class="outline-button small">Hoje</button></div>
+            <div class="calendar-grid weekdays"><span>Dom</span><span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span></div>
+            <div id="calendarGrid" class="calendar-grid days"></div>
+          </section>
+          <div class="calendar-legend"><span><i class="dot urgent"></i> Urgente</span><span><i class="dot high"></i> Alta</span><span><i class="dot medium"></i> Média</span><span><i class="dot low"></i> Baixa</span></div>
+        </section>
+
+        <section id="kanbanView" class="view">
+          <div class="view-heading"><div><span class="eyebrow">VISUALIZAÇÃO</span><h2>Quadro Kanban</h2><p>Arraste as tarefas para acompanhar seu fluxo.</p></div><button class="new-task" data-open-task><span>+</span> Nova tarefa</button></div>
+          <div id="kanbanBoard" class="kanban-board"></div>
+        </section>
+
+        <section id="analyticsView" class="view">
+          <div class="view-heading"><div><span class="eyebrow">SEU RITMO</span><h2>Produtividade</h2><p>Pequena consistência vira grande progresso.</p></div><select id="analyticsPeriod" class="clean-select"><option>Esta semana</option><option>Este mês</option></select></div>
+          <div id="analyticsCards" class="analytics-cards"></div>
+          <section class="chart-card"><div class="chart-title"><div><h3>Tarefas concluídas</h3><p>Seu ritmo nos últimos 7 dias</p></div><span class="upward">↗ +18%</span></div><div id="activityChart" class="activity-chart"></div><div class="chart-labels"><span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span><span>Hoje</span></div></section>
+          <section class="insight-grid"><div class="insight-card streak"><span class="insight-icon">♨</span><div><span>Sequência atual</span><strong>4 dias</strong><p>Continue assim — você está criando um hábito.</p></div></div><div class="insight-card"><span class="insight-icon purple">✦</span><div><span>Melhor período</span><strong>Manhã</strong><p>Você conclui mais tarefas entre 9h e 12h.</p></div></div></section>
+        </section>
+
+        <section id="settingsView" class="view">
+          <div class="view-heading"><div><span class="eyebrow">PREFERÊNCIAS</span><h2>Configurações</h2><p>Deixe a Orbit com a sua cara.</p></div></div>
+          <div class="settings-layout">
+            <section class="settings-card"><h3>Aparência</h3><p>Escolha como prefere visualizar seu espaço.</p><div class="setting-row"><div><strong>Modo escuro</strong><span>Use a interface espacial escura</span></div><label class="switch"><input id="settingsTheme" type="checkbox" checked><i></i></label></div></section>
+            <section class="settings-card"><h3>Dados</h3><p>As suas tarefas são guardadas neste navegador.</p><div class="setting-row"><div><strong>Redefinir tarefas de demonstração</strong><span>Restaura as listas e tarefas iniciais.</span></div><button id="resetDemo" class="outline-button small">Restaurar</button></div></section>
+            <section class="settings-card"><h3>Atalhos</h3><div class="shortcut-row"><span>Nova tarefa</span><kbd>⌘ N</kbd></div><div class="shortcut-row"><span>Buscar tarefas</span><kbd>/</kbd></div><div class="shortcut-row"><span>Fechar janela</span><kbd>Esc</kbd></div></section>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="modal-backdrop" id="taskModal" aria-hidden="true">
+      <section class="modal task-modal" role="dialog" aria-modal="true" aria-labelledby="taskModalTitle">
+        <div class="modal-top"><div><span class="eyebrow" id="taskModalEyebrow">NOVA TAREFA</span><h2 id="taskModalTitle">O que vamos conquistar?</h2></div><button class="close-modal" data-close-modal aria-label="Fechar">×</button></div>
+        <form id="taskForm">
+          <input type="hidden" id="taskId" />
+          <label class="field full"><span>Título</span><input id="taskTitleInput" required maxlength="120" placeholder="Ex: Finalizar apresentação" autocomplete="off" /></label>
+          <label class="field full"><span>Descrição <small>opcional</small></span><textarea id="taskDescriptionInput" rows="3" maxlength="500" placeholder="Adicione um pouco de contexto..."></textarea></label>
+          <div class="form-grid"><label class="field"><span>Projeto</span><select id="taskProjectInput"></select></label><label class="field"><span>Prioridade</span><select id="taskPriorityInput"><option value="low">Baixa</option><option value="medium" selected>Média</option><option value="high">Alta</option><option value="urgent">Urgente</option></select></label><label class="field"><span>Data e hora</span><input id="taskDueInput" type="datetime-local" /></label><label class="field"><span>Status</span><select id="taskStatusInput"><option value="todo">A fazer</option><option value="doing">Fazendo</option><option value="done">Concluída</option></select></label></div>
+          <label class="field full"><span>Etiquetas <small>separadas por vírgula</small></span><input id="taskTagsInput" maxlength="100" placeholder="Ex: design, importante" /></label>
+          <div class="subtasks-editor"><div class="subtasks-editor-head"><span>Subtarefas</span><button type="button" id="addSubtaskInput">+ Adicionar</button></div><div id="subtasksInputs"></div></div>
+          <div class="form-actions"><button type="button" class="text-button danger" id="deleteTaskBtn" hidden>Excluir tarefa</button><span></span><button type="button" class="outline-button" data-close-modal>Cancelar</button><button class="new-task" type="submit">Salvar tarefa <span>→</span></button></div>
+        </form>
+      </section>
+    </div>
+
+    <div class="modal-backdrop" id="projectModal" aria-hidden="true">
+      <section class="modal project-modal" role="dialog" aria-modal="true" aria-labelledby="projectModalTitle"><div class="modal-top"><div><span class="eyebrow">NOVO PROJETO</span><h2 id="projectModalTitle">Crie um novo espaço</h2></div><button class="close-modal" data-close-project aria-label="Fechar">×</button></div><form id="projectForm"><label class="field full"><span>Nome do projeto</span><input id="projectNameInput" required maxlength="40" placeholder="Ex: Estudos" autocomplete="off" /></label><div class="color-picker"><span>Cor de destaque</span><div id="colorOptions"><button type="button" class="color-choice selected" data-color="#7c6cff" style="--color:#7c6cff"></button><button type="button" class="color-choice" data-color="#44b7ff" style="--color:#44b7ff"></button><button type="button" class="color-choice" data-color="#3ed598" style="--color:#3ed598"></button><button type="button" class="color-choice" data-color="#f5a646" style="--color:#f5a646"></button><button type="button" class="color-choice" data-color="#ff6b8b" style="--color:#ff6b8b"></button></div></div><div class="form-actions"><span></span><button type="button" class="outline-button" data-close-project>Cancelar</button><button class="new-task" type="submit">Criar projeto <span>→</span></button></div></form></section>
+    </div>
+
+    <div class="modal-backdrop" id="renameModal" aria-hidden="true">
+      <section class="modal rename-modal" role="dialog" aria-modal="true" aria-labelledby="renameModalTitle">
+        <div class="modal-top"><div><span class="eyebrow" id="renameModalEyebrow">RENOMEAR TAREFA</span><h2 id="renameModalTitle">Dê um novo nome</h2></div><button class="close-modal" data-close-rename aria-label="Fechar">×</button></div>
+        <form id="renameForm"><input id="renameTaskId" type="hidden" /><input id="renameEntityType" type="hidden" value="task" /><label class="field full"><span id="renameFieldLabel">Nome da tarefa</span><input id="renameTaskInput" required maxlength="120" autocomplete="off" /></label><div class="form-actions compact-actions"><span></span><button type="button" class="outline-button" data-close-rename>Cancelar</button><button class="new-task" type="submit">Renomear <span>→</span></button></div></form>
+      </section>
+    </div>
+
+    <div id="toast" class="toast" role="status"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
